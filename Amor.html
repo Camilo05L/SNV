@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💕 San Valentín para TI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      height:100vh;
+      overflow:hidden;
+      font-family:'Dancing Script',cursive;
+      background:linear-gradient(45deg,#ff9a9e,#fecfef,#fecfef,#ff9a9e);
+      background-size:400% 400%;
+      animation:gradient 15s ease infinite;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+    }
+
+    @keyframes gradient{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    .container{
+      text-align:center;
+      padding:3rem 2rem;
+      background:rgba(255,255,255,0.15);
+      border-radius:30px;
+      backdrop-filter:blur(15px);
+      box-shadow:0 20px 40px rgba(0,0,0,0.3);
+      transform:translateY(50px);
+      opacity:0;
+      animation:entrada 1.5s forwards;
+      z-index:2;
+    }
+
+    @keyframes entrada{
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    h1{
+      font-size:3rem;
+      margin-bottom:1rem;
+      text-shadow:0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .corazon{
+      font-size:4rem;
+      display:block;
+      margin:1rem 0;
+      animation:pulso 2s infinite;
+    }
+
+    @keyframes pulso{
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.1);}
+    }
+
+    .mensaje{
+      font-size:1.5rem;
+      margin:2rem 0;
+      line-height:1.5;
+    }
+
+    button{
+      background:linear-gradient(45deg,#ff6b9d,#c44569);
+      color:white;
+      border:none;
+      padding:1rem 2rem;
+      font-size:1.2rem;
+      border-radius:50px;
+      cursor:pointer;
+      font-family:inherit;
+      box-shadow:0 10px 20px rgba(255,0,100,0.4);
+      transition:all 0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.05);
+      box-shadow:0 15px 30px rgba(255,0,100,0.6);
+    }
+
+    .firma{
+      font-size:1.3rem;
+      margin-top:1.5rem;
+    }
+
+    #music{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  font-size:1.8rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(45deg,#ff6b9d,#c44569);
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  z-index:3;
+  transition:0.3s;
+}
+
+#music:hover{
+  transform:translateX(-50%) scale(1.1);
+}
+
+
+    .hearts{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .heart{
+      position:absolute;
+      font-size:20px;
+      animation:flotar 6s linear forwards;
+      opacity:0;
+    }
+
+    @keyframes flotar{
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+      10%{opacity:1;}
+      90%{opacity:1;}
+      100%{transform:translateY(-100px) rotate(720deg);opacity:0;}
+    }
+
+  </style>
+</head>
+
+<body>
+
+<button id="music" title="Reproducir I Wanna Be Yours">
+  <i class="fas fa-play"></i>
+</button>
+
+
+<audio id="song" loop>
+
+  <source src="wanna.mp3" type="audio/mp3">
+</audio>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="container">
+  <h1>💕 Feliz San Valentín 💕</h1>
+  <div class="corazon">💖</div>
+  <p class="mensaje" id="mensaje">
+    ¡Tocá el botón para un mensaje especial de mi reina preciosa!
+  </p>
+  <button id="btn">💌 Mensaje para TI</button>
+  <p class="firma">Con amor infinito, <strong>Tu Patito Juan🦆❤️</strong></p>
+</div>
+
+<script>
+
+
+  document.getElementById('btn').onclick = function(){
+    const mensajes = [
+      "¡TE AMO MÁS QUE A NADA EN EL MUNDO! 💕💕💕",
+      "Sos lo mejor que me pasó en la vida 😍🥰",
+      "Siempre tendrás mi apoyo amor mío 🥰",
+      "Gracias por existir, sos perfecta 💖",
+       "💖"
+    ];
+
+    document.getElementById('mensaje').innerHTML =
+      mensajes[Math.floor(Math.random() * mensajes.length)];
+  };
+
+
+  function corazon(){
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = ['💕','💖','💗','💝','❤️']
+      [Math.floor(Math.random()*5)];
+    heart.style.left = Math.random()*100 + 'vw';
+    heart.style.animationDuration = (5+Math.random()*3) + 's';
+    document.getElementById('hearts').appendChild(heart);
+    setTimeout(()=>heart.remove(),8000);
+  }
+
+  setInterval(corazon,400);
+  for(let i=0;i<15;i++) setTimeout(corazon,i*200);
+
+
+  const musicBtn = document.getElementById("music");
+  const song = document.getElementById("song");
+
+  musicBtn.addEventListener("click", function () {
+    if (song.paused) {
+      song.play();
+      musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+      song.pause();
+      musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+  });
+
+</script>
+
+</body>
+</html>
